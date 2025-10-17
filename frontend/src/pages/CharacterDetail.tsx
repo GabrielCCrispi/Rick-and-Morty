@@ -74,48 +74,160 @@ const CharacterDetailPage = () => {
     return <p>Personagem não encontrado.</p>;
   }
 
-  const containerStyle: React.CSSProperties = {
-    display: 'flex',
-    gap: '2rem',
-    alignItems: 'flex-start',
-    flexWrap: 'wrap',
-  };
-
-  const imageStyle: React.CSSProperties = {
-    borderRadius: '8px',
-    maxWidth: '100%',
-    width: 'clamp(250px, 50vw, 300px)',
-    height: 'auto',
-  };
-
-  const buttonStyle: React.CSSProperties = {
-    marginTop: '1rem',
-    padding: '0.8rem 1.5rem',
-    cursor: isSaved ? 'default' : 'pointer',
-    opacity: isSaved ? 0.7 : 1,
+  const getStatusColor = (status: string) => {
+    if (status === 'Alive') return '#22c55e';
+    if (status === 'Dead') return '#ef4444';
+    return '#9ca3af';
   };
 
   return (
-    <div style={containerStyle}>
-      <img src={character.image} alt={character.name} style={imageStyle}/>
-      <div style={{ flex: '1 1 300px' }}>
-        <h1>{character.name}</h1>
-        <p><strong>Status:</strong> {character.status}</p>
-        <p><strong>Espécie:</strong> {character.species}</p>
-        <p><strong>Gênero:</strong> {character.gender}</p>
-        <p><strong>Origem:</strong> {character.origin.name}</p>
-        <p><strong>Localização Atual:</strong> {character.location.name}</p>
+    <div style={{ padding: '1.5rem', maxWidth: '750px', margin: '0 auto' }}>
+      <div style={{
+        background: '#ffffff',
+        borderRadius: '16px',
+        boxShadow: '0 6px 12px rgba(0, 0, 0, 0.1)',
+        border: '2px solid #e5e7eb',
+        overflow: 'hidden',
+      }}>
+        <div style={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          gap: '0',
+        }}>
+          {/* Imagem do Personagem */}
+          <div style={{
+            flex: '1 1 300px',
+            position: 'relative',
+          }}>
+            <img
+              src={character.image}
+              alt={character.name}
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                minHeight: '350px',
+              }}
+            />
+            <div style={{
+              position: 'absolute',
+              top: '20px',
+              right: '20px',
+              padding: '8px 16px',
+              borderRadius: '20px',
+              background: getStatusColor(character.status),
+              color: '#000000',
+              fontWeight: '700',
+              fontSize: '0.9rem',
+              boxShadow: '0 4px 8px rgba(0, 0, 0, 0.3)',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+            }}>
+              <span style={{
+                width: '10px',
+                height: '10px',
+                borderRadius: '50%',
+                background: '#000000',
+              }}></span>
+              {character.status}
+            </div>
+          </div>
 
-        <button
-          onClick={handleSaveCharacter}
-          disabled={isSaved}
-          style={buttonStyle}
-        >
-          {isSaved ? 'Personagem Salvo ✔️' : 'Salvar Personagem'}
-        </button>
+          {/* Informações do Personagem */}
+          <div style={{
+            flex: '1 1 300px',
+            padding: '1.5rem',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '1.25rem',
+          }}>
+            <h1 style={{
+              margin: '0',
+              fontSize: '1.75rem',
+              fontWeight: '800',
+              color: '#1f2937',
+              borderBottom: '3px solid #3b82f6',
+              paddingBottom: '0.5rem',
+            }}>
+              {character.name}
+            </h1>
+
+            <div style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '0.85rem',
+            }}>
+              <div style={infoBoxStyle}>
+                <span style={labelStyle}>Espécie</span>
+                <span style={valueStyle}>{character.species}</span>
+              </div>
+
+              <div style={infoBoxStyle}>
+                <span style={labelStyle}>Gênero</span>
+                <span style={valueStyle}>{character.gender}</span>
+              </div>
+
+              <div style={infoBoxStyle}>
+                <span style={labelStyle}>Origem</span>
+                <span style={valueStyle}>{character.origin.name}</span>
+              </div>
+
+              <div style={infoBoxStyle}>
+                <span style={labelStyle}>Localização Atual</span>
+                <span style={valueStyle}>{character.location.name}</span>
+              </div>
+            </div>
+
+            <button
+              onClick={handleSaveCharacter}
+              disabled={isSaved}
+              style={{
+                marginTop: 'auto',
+                padding: '0.85rem 1.5rem',
+                fontSize: '1rem',
+                fontWeight: '700',
+                borderRadius: '10px',
+                border: 'none',
+                background: isSaved ? '#22c55e' : '#3b82f6',
+                color: 'white',
+                cursor: isSaved ? 'default' : 'pointer',
+                transition: 'all 0.3s ease',
+                boxShadow: '0 3px 6px rgba(0, 0, 0, 0.2)',
+                opacity: isSaved ? 0.8 : 1,
+              }}
+            >
+              {isSaved ? '✓ Personagem Salvo' : 'Salvar Personagem'}
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );
+};
+
+const infoBoxStyle: React.CSSProperties = {
+  background: '#f9fafb',
+  padding: '0.85rem',
+  borderRadius: '8px',
+  border: '2px solid #e5e7eb',
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '0.35rem',
+};
+
+const labelStyle: React.CSSProperties = {
+  fontSize: '0.75rem',
+  fontWeight: '600',
+  color: '#6b7280',
+  textTransform: 'uppercase',
+  letterSpacing: '0.05em',
+};
+
+const valueStyle: React.CSSProperties = {
+  fontSize: '1rem',
+  fontWeight: '700',
+  color: '#1f2937',
 };
 
 export default CharacterDetailPage;

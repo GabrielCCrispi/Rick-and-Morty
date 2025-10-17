@@ -1,35 +1,57 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider, useAuth } from './contexts/AuthContext';
+import { Navbar } from './components/Navbar';
+import Home from './pages/Home';
+import Characters from './pages/Characters';
+import CharacterDetail from './pages/CharacterDetail';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import MyCharacters from './pages/MyCharacter';
 
-function App() {
-  const [count, setCount] = useState(0)
+const ProtectedRoute = ({ children }) => {
+  const { isAuthenticated } = useAuth();
+  return isAuthenticated ? children : <Navigate to="/login" />;
+};
+
+function AppRoutes() {
+  const containerStyle: React.CSSProperties = {
+    padding: 'clamp(1rem, 3vw, 2rem)',
+    maxWidth: '1400px',
+    margin: '0 auto',
+  };
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <Navbar />
+      <div style={containerStyle}>
+        <Routes>
+          <Route path="/" element={<Home/>} />
+          <Route path="/personagens" element={<Characters/>} />
+          <Route path="/personagens/:id" element={<CharacterDetail/>} />
+          <Route path="/login" element={<Login/>} />
+          <Route path="/cadastro" element={<Register/>} />
+          <Route
+            path="/meus-personagens"
+            element={
+              <ProtectedRoute>
+                <MyCharacters/>
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
-  )
+  );
 }
 
-export default App
+function App() {
+  return (
+    <Router>
+      <AuthProvider>
+        <AppRoutes/>
+      </AuthProvider>
+    </Router>
+  );
+}
+
+export default App;

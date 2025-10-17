@@ -8,23 +8,29 @@ export const Navbar = () => {
 
   const navStyle: React.CSSProperties = {
     background: '#333',
-    padding: '1rem',
+    padding: '1rem 2rem',
     position: 'relative',
+    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
   };
 
   const navContentStyle: React.CSSProperties = {
     display: 'flex',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     alignItems: 'center',
-    flexWrap: 'wrap',
-    gap: '1rem',
+    gap: '1.5rem',
+    maxWidth: '1400px',
+    margin: '0 auto',
   };
 
   const linkContainerStyle: React.CSSProperties = {
     display: 'flex',
-    gap: '1rem',
-    flexWrap: 'wrap',
+    gap: '0.5rem',
     alignItems: 'center',
+    background: 'rgba(255, 255, 255, 0.1)',
+    padding: '0.5rem 1rem',
+    borderRadius: '12px',
+    border: '2px solid rgba(255, 255, 255, 0.2)',
+    backdropFilter: 'blur(10px)',
   };
 
   const mobileMenuStyle: React.CSSProperties = {
@@ -45,15 +51,43 @@ export const Navbar = () => {
   };
 
   const linkStyle = ({ isActive }: { isActive: boolean }): React.CSSProperties => ({
-    color: isActive ? '#61dafb' : 'white',
+    color: '#97F14A',
     textDecoration: 'none',
-    fontSize: 'clamp(1rem, 2vw, 1.2rem)',
+    fontSize: '1rem',
+    fontWeight: isActive ? '700' : '600',
     whiteSpace: 'nowrap',
+    padding: '0.5rem 1rem',
+    borderRadius: '8px',
+    background: isActive ? 'rgba(151, 241, 74, 0.15)' : 'transparent',
+    transition: 'all 0.3s ease',
+    border: isActive ? '2px solid #97F14A' : '2px solid transparent',
   });
+
+  const buttonStyle: React.CSSProperties = {
+    color: '#1f2937',
+    background: '#ffd93d',
+    border: '2px solid #ffb800',
+    cursor: 'pointer',
+    fontSize: '1rem',
+    fontWeight: '700',
+    padding: '0.5rem 1rem',
+    borderRadius: '8px',
+    transition: 'all 0.3s ease',
+    whiteSpace: 'nowrap',
+  };
 
   return (
     <nav style={navStyle}>
       <style>{`
+        a:hover {
+          background: rgba(151, 241, 74, 0.2) !important;
+          color: #97F14A !important;
+          transform: translateY(-2px);
+        }
+        button:hover {
+          background: #ffb800 !important;
+          transform: translateY(-2px);
+        }
         @media (max-width: 768px) {
           .nav-links {
             display: none !important;
@@ -68,28 +102,17 @@ export const Navbar = () => {
       `}</style>
 
       <div style={navContentStyle}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', width: '100%', justifyContent: 'space-between' }}>
-          <div className="nav-links" style={linkContainerStyle}>
-            <NavLink to="/" style={linkStyle}>Home</NavLink>
-            <NavLink to="/personagens" style={linkStyle}>Personagens</NavLink>
-            {isAuthenticated && (
-              <NavLink to="/meus-personagens" style={linkStyle}>Meus Favoritos</NavLink>
-            )}
-          </div>
-
-          <button
-            className="hamburger"
-            style={hamburgerStyle}
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            aria-label="Menu"
-          >
-            ☰
-          </button>
+        <div className="nav-links" style={linkContainerStyle}>
+          <NavLink to="/" style={linkStyle}>Home</NavLink>
+          <NavLink to="/personagens" style={linkStyle}>Personagens</NavLink>
+          {isAuthenticated && (
+            <NavLink to="/meus-personagens" style={linkStyle}>Meus Favoritos</NavLink>
+          )}
         </div>
 
         <div className="nav-links" style={linkContainerStyle}>
           {isAuthenticated ? (
-            <button onClick={logout} style={{ color: 'white', background: 'none', border: 'none', cursor: 'pointer', fontSize: 'clamp(1rem, 2vw, 1.2rem)' }}>
+            <button onClick={logout} style={buttonStyle}>
               Sair
             </button>
           ) : (
@@ -99,6 +122,15 @@ export const Navbar = () => {
             </>
           )}
         </div>
+
+        <button
+          className="hamburger"
+          style={hamburgerStyle}
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          aria-label="Menu"
+        >
+          ☰
+        </button>
       </div>
 
       <div className="mobile-menu" style={mobileMenuStyle}>
@@ -108,7 +140,7 @@ export const Navbar = () => {
           <NavLink to="/meus-personagens" style={linkStyle} onClick={() => setIsMenuOpen(false)}>Meus Favoritos</NavLink>
         )}
         {isAuthenticated ? (
-          <button onClick={() => { logout(); setIsMenuOpen(false); }} style={{ color: 'white', background: 'none', border: 'none', cursor: 'pointer', fontSize: '1.2rem', textAlign: 'left' }}>
+          <button onClick={() => { logout(); setIsMenuOpen(false); }} style={{ ...buttonStyle, width: '100%' }}>
             Sair
           </button>
         ) : (

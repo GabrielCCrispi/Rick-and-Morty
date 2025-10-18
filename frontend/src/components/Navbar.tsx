@@ -7,10 +7,12 @@ export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const navStyle: React.CSSProperties = {
-    background: '#333',
+    background: 'rgba(10, 14, 39, 0.85)',
     padding: '1rem 2rem',
     position: 'relative',
-    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+    boxShadow: '0 4px 20px rgba(0, 212, 255, 0.15)',
+    backdropFilter: 'blur(15px)',
+    borderBottom: '2px solid rgba(0, 212, 255, 0.2)',
   };
 
   const navContentStyle: React.CSSProperties = {
@@ -26,11 +28,12 @@ export const Navbar = () => {
     display: 'flex',
     gap: '0.5rem',
     alignItems: 'center',
-    background: 'rgba(255, 255, 255, 0.1)',
+    background: 'rgba(0, 212, 255, 0.08)',
     padding: '0.5rem 1rem',
     borderRadius: '12px',
-    border: '2px solid rgba(255, 255, 255, 0.2)',
+    border: '2px solid rgba(0, 212, 255, 0.3)',
     backdropFilter: 'blur(10px)',
+    boxShadow: '0 4px 12px rgba(0, 212, 255, 0.1)',
   };
 
   const mobileMenuStyle: React.CSSProperties = {
@@ -51,42 +54,46 @@ export const Navbar = () => {
   };
 
   const linkStyle = ({ isActive }: { isActive: boolean }): React.CSSProperties => ({
-    color: '#97F14A',
+    color: isActive ? '#00d4ff' : '#97F14A',
     textDecoration: 'none',
     fontSize: '1rem',
     fontWeight: isActive ? '700' : '600',
     whiteSpace: 'nowrap',
     padding: '0.5rem 1rem',
     borderRadius: '8px',
-    background: isActive ? 'rgba(151, 241, 74, 0.15)' : 'transparent',
-    transition: 'all 0.3s ease',
-    border: isActive ? '2px solid #97F14A' : '2px solid transparent',
+    background: isActive ? 'rgba(0, 212, 255, 0.2)' : 'transparent',
+    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+    border: isActive ? '2px solid #00d4ff' : '2px solid transparent',
+    boxShadow: isActive ? '0 4px 12px rgba(0, 212, 255, 0.4)' : 'none',
   });
 
   const buttonStyle: React.CSSProperties = {
-    color: '#1f2937',
-    background: '#ffd93d',
+    color: '#000',
+    background: 'linear-gradient(135deg, #ffd93d 0%, #ffb800 100%)',
     border: '2px solid #ffb800',
     cursor: 'pointer',
     fontSize: '1rem',
     fontWeight: '700',
     padding: '0.5rem 1rem',
     borderRadius: '8px',
-    transition: 'all 0.3s ease',
+    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
     whiteSpace: 'nowrap',
+    boxShadow: '0 4px 12px rgba(255, 184, 0, 0.3)',
   };
 
   return (
     <nav style={navStyle}>
       <style>{`
         a:hover {
-          background: rgba(151, 241, 74, 0.2) !important;
-          color: #97F14A !important;
-          transform: translateY(-2px);
+          background: rgba(0, 212, 255, 0.25) !important;
+          color: #00d4ff !important;
+          transform: translateY(-2px) scale(1.02);
+          box-shadow: 0 6px 16px rgba(0, 212, 255, 0.4) !important;
         }
         button:hover {
-          background: #ffb800 !important;
-          transform: translateY(-2px);
+          background: linear-gradient(135deg, #ffb800 0%, #ff9500 100%) !important;
+          transform: translateY(-2px) scale(1.05);
+          box-shadow: 0 8px 20px rgba(255, 184, 0, 0.5) !important;
         }
         @media (max-width: 768px) {
           .nav-links {

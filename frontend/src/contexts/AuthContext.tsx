@@ -15,8 +15,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem('authToken');
-    if (token) {
+    const userId = localStorage.getItem('userId');
+    if (userId) {
       setIsAuthenticated(true);
     }
   }, []);
@@ -24,21 +24,25 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const login = async (email, password) => {
     try {
       const response = await localApi.post('/auth/login', { email, password });
-      const { access_token } = response.data;
-      localStorage.setItem('authToken', access_token);
+      const { id, name, email: userEmail } = response.data;
+      localStorage.setItem('userId', id.toString());
+      localStorage.setItem('userName', name);
+      localStorage.setItem('userEmail', userEmail);
       setIsAuthenticated(true);
-      navigate('/'); 
+      navigate('/');
     } catch (error) {
       console.error('Falha no login:', error);
-      
+
       throw new Error('Email ou senha inválidos.');
     }
   };
 
   const logout = () => {
-    localStorage.removeItem('authToken');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('userName');
+    localStorage.removeItem('userEmail');
     setIsAuthenticated(false);
-    navigate('/login'); 
+    navigate('/login');
   };
 
   return (

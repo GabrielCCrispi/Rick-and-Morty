@@ -1,98 +1,156 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Rick and Morty - Fullstack Application
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Aplicação fullstack para gerenciar personagens favoritos de Rick and Morty com autenticação JWT.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## 🏗️ Estrutura do Projeto
 
-## Description
-
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
-## Project setup
-
-```bash
-$ npm install
+```
+rick_and_morty/
+├── backend/          # API NestJS
+│   ├── src/
+│   ├── test/
+│   └── package.json
+├── frontend/         # App React + Vite
+│   ├── src/
+│   └── package.json
+└── package.json      # Scripts raiz para gerenciar ambos
 ```
 
-## Compile and run the project
+## 🚀 Tecnologias
 
+### Backend
+- NestJS
+- TypeORM
+- SQLite
+- JWT Authentication
+- TypeScript
+
+### Frontend
+- React
+- TypeScript
+- Vite
+- React Router
+- Axios
+
+## 📦 Instalação
+
+### Instalar todas as dependências (backend + frontend)
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+npm run install:all
 ```
 
-## Run tests
-
+### Ou instalar separadamente
 ```bash
-# unit tests
-$ npm run test
+# Backend
+cd backend && npm install
 
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+# Frontend
+cd frontend && npm install
 ```
 
-## Deployment
+## 🔧 Configuração
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
+### Backend
+1. Copie o arquivo `.env.example` para `.env` no diretório backend:
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+cd backend
+cp .env.example .env
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+2. Configure as variáveis de ambiente no `.env`:
+```env
+PORT=3000
+JWT_SECRET=your-secret-key-here
+JWT_EXPIRES_IN=7d
+```
 
-## Resources
+## 🏃 Executando o Projeto
 
-Check out a few resources that may come in handy when working with NestJS:
+### Desenvolvimento (ambos simultaneamente)
+```bash
+npm run dev
+```
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+### Ou execute separadamente:
 
-## Support
+**Backend** (porta 3000):
+```bash
+npm run dev:backend
+```
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+**Frontend** (porta 5173):
+```bash
+npm run dev:frontend
+```
 
-## Stay in touch
+## 🔨 Build
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+```bash
+# Build completo (backend + frontend)
+npm run build
 
-## License
+# Ou separadamente
+npm run build:backend
+npm run build:frontend
+```
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+## ✅ Testes
+
+```bash
+# Testes do backend
+npm run test:backend
+```
+
+## 🔐 Autenticação
+
+A aplicação utiliza JWT (JSON Web Tokens) para autenticação:
+
+- Tokens são gerados no login
+- Armazenados no localStorage do navegador
+- Enviados no header `Authorization: Bearer <token>`
+- Validados pelo backend em rotas protegidas
+
+## 📝 API Endpoints
+
+### Autenticação
+- `POST /auth/register` - Registrar novo usuário
+- `POST /auth/login` - Login
+- `POST /auth/logout` - Logout
+
+### Personagens (Protegido)
+- `GET /my-characters` - Listar personagens favoritos
+- `POST /my-characters` - Adicionar personagem favorito
+- `DELETE /my-characters/:id` - Remover personagem favorito
+
+## 📂 Estrutura do Backend
+
+```
+backend/src/
+├── auth/              # Módulo de autenticação
+│   ├── auth.controller.ts
+│   ├── auth.service.ts
+│   ├── auth.module.ts
+│   ├── jwt.strategy.ts
+│   ├── jwt-auth.guard.ts
+│   └── user.entity.ts
+├── my-characters/     # Módulo de personagens
+└── main.ts
+```
+
+## 🎨 Estrutura do Frontend
+
+```
+frontend/src/
+├── components/
+│   └── ProtectedRoute.tsx
+├── contexts/
+│   └── AuthContext.tsx
+├── pages/
+├── services/
+│   └── api.ts
+└── App.tsx
+```
+
+## 📄 Licença
+
+MIT

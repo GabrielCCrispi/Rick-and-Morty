@@ -26,6 +26,28 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  background: #0a0e27;
+  background-image:
+    radial-gradient(2px 2px at 10% 20%, white, transparent),
+    radial-gradient(1px 1px at 15% 15%, white, transparent),
+    radial-gradient(2px 2px at 25% 40%, white, transparent),
+    radial-gradient(1px 1px at 30% 60%, white, transparent),
+    radial-gradient(2px 2px at 45% 25%, white, transparent),
+    radial-gradient(1px 1px at 50% 50%, white, transparent),
+    radial-gradient(2px 2px at 55% 75%, white, transparent),
+    radial-gradient(1px 1px at 60% 30%, white, transparent),
+    radial-gradient(2px 2px at 70% 55%, white, transparent),
+    radial-gradient(1px 1px at 75% 80%, white, transparent),
+    radial-gradient(2px 2px at 80% 10%, white, transparent),
+    radial-gradient(1px 1px at 85% 45%, white, transparent),
+    radial-gradient(2px 2px at 90% 70%, white, transparent),
+    radial-gradient(1px 1px at 95% 35%, white, transparent),
+    radial-gradient(1px 1px at 20% 90%, white, transparent),
+    radial-gradient(1px 1px at 40% 85%, white, transparent),
+    radial-gradient(1px 1px at 65% 95%, white, transparent);
+  background-size: 100% 100%;
+  background-position: 0% 0%;
+  background-attachment: fixed;
 }
 
 h1 {

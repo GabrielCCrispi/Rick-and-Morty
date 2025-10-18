@@ -7,7 +7,7 @@ export const rickAndMortyApi = axios.create({
 export const localApi = axios.create({
   baseURL: 'http://localhost:3000',
 });
-
+ 
 localApi.interceptors.request.use(
   (config) => {
     const userId = localStorage.getItem('userId');

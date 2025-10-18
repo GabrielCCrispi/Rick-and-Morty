@@ -120,6 +120,8 @@ const CharactersPage = () => {
               backdropFilter: 'blur(10px)',
               boxShadow: '0 4px 20px rgba(0, 212, 255, 0.2)',
               fontWeight: '500',
+              color: '#212529'
+        
             }}
             onFocus={(e) => {
               e.target.style.borderColor = '#00d4ff';

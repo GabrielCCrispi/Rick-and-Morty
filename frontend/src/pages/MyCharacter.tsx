@@ -108,6 +108,12 @@ const MyCharactersPage = () => {
         .delete-icon:hover {
           transform: scale(1.15);
         }
+
+        /* Muda a cor do texto de confirmação quando hover no card */
+        .character-card:hover .confirm-text {
+          color: #ffffff !important;
+          transition: color 0.3s ease;
+        }
       `}</style>
 
       <h1 style={{ textAlign: 'center', fontSize: '2.5rem', color: '#FFF', marginBottom: '2rem', textShadow: '0 0 20px rgba(0, 212, 255, 0.5)' }}>
@@ -121,7 +127,7 @@ const MyCharactersPage = () => {
               <div key={char.id} className="character-card" style={{ ...characterCardStyle, cursor: 'default', position: 'relative' }}>
                 <div style={confirmContainerStyle}>
                   <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🗑️</div>
-                  <p style={confirmTextStyle}>Remover este personagem?</p>
+                  <p className="confirm-text" style={confirmTextStyle}>Remover este personagem?</p>
                   <div style={{ display: 'flex', gap: '0.75rem', marginTop: '1.5rem', width: '100%', padding: '0 1rem' }}>
                     <button
                       onClick={() => handleDelete(char.id)}

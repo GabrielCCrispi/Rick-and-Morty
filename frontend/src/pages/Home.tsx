@@ -66,30 +66,82 @@ const Home = () => {
           0%, 100% { opacity: 0.3; }
           50% { opacity: 1; }
         }
+
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        @keyframes scaleIn {
+          from {
+            opacity: 0;
+            transform: scale(0.9);
+          }
+          to {
+            opacity: 1;
+            transform: scale(1);
+          }
+        }
+
+        @keyframes float {
+          0%, 100% {
+            transform: translateY(0px);
+          }
+          50% {
+            transform: translateY(-10px);
+          }
+        }
+
+        .stat-card {
+          animation: scaleIn 0.6s ease-out;
+        }
+
+        .stat-card:hover {
+          transform: translateY(-8px) scale(1.05);
+          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .header-icon {
+          animation: float 3s ease-in-out infinite;
+        }
+
+        .section {
+          animation: fadeInUp 0.8s ease-out;
+        }
+
+        .favorite-card {
+          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
       `}</style>
 
       {/* Header */}
       <div style={headerStyle}>
-        <div style={headerIconStyle}>🌀</div>
+        <div style={headerIconStyle} className="header-icon">🌀</div>
         <h1 style={titleStyle}>Dashboard Rick and Morty</h1>
         <p style={subtitleStyle}>Explore o multiverso de Rick and Morty</p>
       </div>
 
       {/* Estatísticas da API */}
-      <section style={sectionStyle}>
+      <section style={sectionStyle} className="section">
         <h2 style={sectionTitleStyle}>📊 Estatísticas da API</h2>
         <div style={statsGridStyle}>
-          <div style={{ ...statCardStyle, background: 'linear-gradient(135deg, #0891b2 0%, #0e7490 100%)', boxShadow: '0 8px 32px rgba(8, 145, 178, 0.25)' }}>
+          <div className="stat-card" style={{ ...statCardStyle, background: 'linear-gradient(135deg, #0891b2 0%, #0e7490 100%)', boxShadow: '0 8px 32px rgba(8, 145, 178, 0.25)', animationDelay: '0.1s' }}>
             <div style={statIconStyle}>👥</div>
             <h3 style={statNumberStyle}>{stats.characters}</h3>
             <p style={statLabelStyle}>PERSONAGENS</p>
           </div>
-          <div style={{ ...statCardStyle, background: 'linear-gradient(135deg, #c026d3 0%, #9333ea 100%)', boxShadow: '0 8px 32px rgba(192, 38, 211, 0.25)' }}>
+          <div className="stat-card" style={{ ...statCardStyle, background: 'linear-gradient(135deg, #c026d3 0%, #9333ea 100%)', boxShadow: '0 8px 32px rgba(192, 38, 211, 0.25)', animationDelay: '0.2s' }}>
             <div style={statIconStyle}>🌍</div>
             <h3 style={statNumberStyle}>{stats.locations}</h3>
             <p style={statLabelStyle}>LOCALIZAÇÕES</p>
           </div>
-          <div style={{ ...statCardStyle, background: 'linear-gradient(135deg, #84cc16 0%, #65a30d 100%)', boxShadow: '0 8px 32px rgba(132, 204, 22, 0.25)' }}>
+          <div className="stat-card" style={{ ...statCardStyle, background: 'linear-gradient(135deg, #84cc16 0%, #65a30d 100%)', boxShadow: '0 8px 32px rgba(132, 204, 22, 0.25)', animationDelay: '0.3s' }}>
             <div style={statIconStyle}>📺</div>
             <h3 style={statNumberStyle}>{stats.episodes}</h3>
             <p style={statLabelStyle}>EPISÓDIOS</p>
@@ -100,7 +152,7 @@ const Home = () => {
       {/* Dados do Usuário */}
       {isAuthenticated && (
         <>
-          <section style={sectionStyle}>
+          <section style={sectionStyle} className="section">
             <h2 style={sectionTitleStyle}>⭐ Meus Dados</h2>
             <div style={userStatContainerStyle}>
               <div style={userStatCardStyle}>
@@ -113,7 +165,7 @@ const Home = () => {
             </div>
           </section>
 
-          <section style={sectionStyle}>
+          <section style={sectionStyle} className="section">
             <h2 style={sectionTitleStyle}>🔖 Últimos Favoritos</h2>
             {favorites.length > 0 ? (
               <div style={favoritesGridStyle}>
@@ -157,29 +209,7 @@ const containerStyle: React.CSSProperties = {
   maxWidth: '1400px',
   margin: '0 auto',
   minHeight: '100vh',
-  background: '#0a0e27',
   position: 'relative',
-  backgroundImage: `
-    radial-gradient(2px 2px at 10% 20%, white, transparent),
-    radial-gradient(1px 1px at 15% 15%, white, transparent),
-    radial-gradient(2px 2px at 25% 40%, white, transparent),
-    radial-gradient(1px 1px at 30% 60%, white, transparent),
-    radial-gradient(2px 2px at 45% 25%, white, transparent),
-    radial-gradient(1px 1px at 50% 50%, white, transparent),
-    radial-gradient(2px 2px at 55% 75%, white, transparent),
-    radial-gradient(1px 1px at 60% 30%, white, transparent),
-    radial-gradient(2px 2px at 70% 55%, white, transparent),
-    radial-gradient(1px 1px at 75% 80%, white, transparent),
-    radial-gradient(2px 2px at 80% 10%, white, transparent),
-    radial-gradient(1px 1px at 85% 45%, white, transparent),
-    radial-gradient(2px 2px at 90% 70%, white, transparent),
-    radial-gradient(1px 1px at 95% 35%, white, transparent),
-    radial-gradient(1px 1px at 20% 90%, white, transparent),
-    radial-gradient(1px 1px at 40% 85%, white, transparent),
-    radial-gradient(1px 1px at 65% 95%, white, transparent)
-  `,
-  backgroundSize: '100% 100%',
-  backgroundPosition: '0% 0%',
 };
 
 // Header

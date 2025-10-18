@@ -3,11 +3,14 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { rickAndMortyApi, localApi } from '../services/api';
 import { useAuth } from '../contexts/AuthContext';
 import type { Character } from '../types';
+import { useToast } from '../hooks/useToast';
+import { ToastContainer } from '../components/Toast';
 
 const CharacterDetailPage = () => {
   const { id } = useParams<{ id: string }>();
   const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
+  const toast = useToast();
 
   const [character, setCharacter] = useState<Character | null>(null);
   const [isSaved, setIsSaved] = useState(false);
@@ -40,8 +43,8 @@ const CharacterDetailPage = () => {
 
   const handleSaveCharacter = async () => {
     if (!isAuthenticated) {
-      alert('Você precisa estar logado para salvar um personagem!');
-      navigate('/login');
+      toast.warning('Você precisa estar logado para salvar um personagem!');
+      setTimeout(() => navigate('/login'), 1500);
       return;
     }
     if (!character) return;
@@ -59,10 +62,10 @@ const CharacterDetailPage = () => {
       };
       await localApi.post('/my-characters', payload);
       setIsSaved(true);
-      alert(`${character.name} salvo com sucesso!`);
+      toast.success(`${character.name} salvo com sucesso!`);
     } catch (error) {
       console.error("Erro ao salvar personagem:", error);
-      alert('Ocorreu um erro ao salvar.');
+      toast.error('Ocorreu um erro ao salvar');
     }
   };
 
@@ -82,13 +85,31 @@ const CharacterDetailPage = () => {
 
   return (
     <div style={{ padding: '1.5rem', maxWidth: '750px', margin: '0 auto' }}>
+      <ToastContainer toasts={toast.toasts} removeToast={toast.removeToast} />
       <div style={{
         background: '#ffffff',
         borderRadius: '16px',
         boxShadow: '0 6px 12px rgba(0, 0, 0, 0.1)',
         border: '2px solid #e5e7eb',
         overflow: 'hidden',
+        position: 'relative',
       }}>
+        {/* Botão de Fechar */}
+        <button
+          onClick={() => navigate(-1)}
+          style={closeButtonStyle}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.transform = 'scale(1.1) rotate(90deg)';
+            e.currentTarget.style.boxShadow = '0 6px 20px rgba(239, 68, 68, 0.6)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = 'scale(1) rotate(0deg)';
+            e.currentTarget.style.boxShadow = '0 4px 12px rgba(239, 68, 68, 0.4)';
+          }}
+        >
+          ✕
+        </button>
+
         <div style={{
           display: 'flex',
           flexWrap: 'wrap',
@@ -228,6 +249,27 @@ const valueStyle: React.CSSProperties = {
   fontSize: '1rem',
   fontWeight: '700',
   color: '#1f2937',
+};
+
+const closeButtonStyle: React.CSSProperties = {
+  position: 'absolute',
+  top: '20px',
+  right: '20px',
+  width: '40px',
+  height: '40px',
+  borderRadius: '50%',
+  border: 'none',
+  background: 'rgba(239, 68, 68, 0.95)',
+  color: 'white',
+  fontSize: '1.5rem',
+  cursor: 'pointer',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  zIndex: 10,
+  transition: 'all 0.3s ease',
+  boxShadow: '0 4px 12px rgba(239, 68, 68, 0.4)',
+  fontWeight: '700',
 };
 
 export default CharacterDetailPage;

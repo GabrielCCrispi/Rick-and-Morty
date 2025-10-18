@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { localApi } from '../services/api';
+import { useToast } from '../hooks/useToast';
+import { ToastContainer } from '../components/Toast';
 
 const RegisterPage = () => {
   const [name, setName] = useState('');
@@ -8,6 +10,7 @@ const RegisterPage = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const toast = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -19,13 +22,20 @@ const RegisterPage = () => {
     }
 
     try {
-      await localApi.post('/auth/register', {
+      const response = await localApi.post('/auth/register', {
         name,
         email,
         password,
       });
-      alert('Cadastro realizado com sucesso! Você será redirecionado para a página de login.');
-      navigate('/login');
+
+      // Fazer login automático após o cadastro
+      const { id, name: userName, email: userEmail } = response.data;
+      localStorage.setItem('userId', id.toString());
+      localStorage.setItem('userName', userName);
+      localStorage.setItem('userEmail', userEmail);
+
+      toast.success('Cadastro realizado com sucesso! Bem-vindo(a)!');
+      setTimeout(() => navigate('/'), 1500);
     } catch (err: any) {
       if (err.response && err.response.data.message) {
         setError(err.response.data.message);
@@ -38,6 +48,7 @@ const RegisterPage = () => {
 
   return (
     <div style={pageContainerStyle}>
+      <ToastContainer toasts={toast.toasts} removeToast={toast.removeToast} />
       <div style={formContainerStyle}>
         <div style={headerStyle}>
           <h1 style={titleStyle}>✨ Cadastro</h1>

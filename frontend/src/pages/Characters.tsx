@@ -37,43 +37,132 @@ const CharactersPage = () => {
   return (
     <div style={{ padding: '2rem' }}>
       <style>{`
-        .character-card:hover {
-          transform: translateY(-8px);
-          box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
-          border-color: #3b82f6;
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
         }
+
+        @keyframes shimmer {
+          0% {
+            background-position: -1000px 0;
+          }
+          100% {
+            background-position: 1000px 0;
+          }
+        }
+
+        @keyframes pulse {
+          0%, 100% {
+            box-shadow: 0 0 0 0 rgba(0, 212, 255, 0.7);
+          }
+          50% {
+            box-shadow: 0 0 0 10px rgba(0, 212, 255, 0);
+          }
+        }
+
+        .search-input {
+          animation: fadeIn 0.6s ease-out;
+        }
+
+        .search-input:focus {
+          animation: pulse 2s infinite;
+        }
+
+        .character-card {
+          animation: fadeIn 0.5s ease-out;
+        }
+
+        .character-card:hover {
+          transform: translateY(-12px) scale(1.02);
+          box-shadow: 0 20px 40px rgba(0, 212, 255, 0.3);
+          border-color: #00d4ff;
+          background: rgba(0, 212, 255, 0.05) !important;
+        }
+
         .character-card:hover img {
-          transform: scale(1.05);
+          transform: scale(1.1) rotate(2deg);
+        }
+
+        .loading-shimmer {
+          background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+          background-size: 1000px 100%;
+          animation: shimmer 2s infinite;
         }
       `}</style>
-      <h1 style={{ textAlign: 'center', fontSize: '2.5rem', color: '##FFF', marginBottom: '2rem' }}>Personagens</h1>
+      <h1 style={{ textAlign: 'center', fontSize: '2.5rem', color: '#FFF', marginBottom: '2rem', textShadow: '0 0 20px rgba(0, 212, 255, 0.5)' }}>Personagens</h1>
 
-      {/* Filtro */}
-      <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '2rem' }}>
-        <input
-          type="text"
-          placeholder="🔍 Filtrar por nome..."
-          onChange={(e) => {
-              setPage(1);
-              setNameFilter(e.target.value)
-          }}
-          style={{
-            padding: '0.75rem 1.25rem',
-            width: '100%',
-            maxWidth: '500px',
-            borderRadius: '12px',
-            border: '2px solid #e5e7eb',
-            fontSize: '1rem',
-            outline: 'none',
-            transition: 'all 0.3s ease',
-          }}
-          onFocus={(e) => e.target.style.borderColor = '#3b82f6'}
-          onBlur={(e) => e.target.style.borderColor = '#e5e7eb'}
-        />
+      {/* Filtro com efeitos */}
+      <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '3rem' }}>
+        <div style={{ position: 'relative', width: '100%', maxWidth: '600px' }}>
+          <input
+            type="text"
+            placeholder="Pesquisar personagens..."
+            className="search-input"
+            onChange={(e) => {
+                setPage(1);
+                setNameFilter(e.target.value)
+            }}
+            style={{
+              padding: '1rem 1.5rem 1rem 3.5rem',
+              width: '100%',
+              borderRadius: '16px',
+              border: '3px solid rgba(0, 212, 255, 0.3)',
+              fontSize: '1.1rem',
+              outline: 'none',
+              transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+              background: 'rgba(255, 255, 255, 0.95)',
+              backdropFilter: 'blur(10px)',
+              boxShadow: '0 4px 20px rgba(0, 212, 255, 0.2)',
+              fontWeight: '500',
+            }}
+            onFocus={(e) => {
+              e.target.style.borderColor = '#00d4ff';
+              e.target.style.boxShadow = '0 8px 30px rgba(0, 212, 255, 0.4)';
+              e.target.style.transform = 'translateY(-2px)';
+            }}
+            onBlur={(e) => {
+              e.target.style.borderColor = 'rgba(0, 212, 255, 0.3)';
+              e.target.style.boxShadow = '0 4px 20px rgba(0, 212, 255, 0.2)';
+              e.target.style.transform = 'translateY(0)';
+            }}
+          />
+          <div style={{
+            position: 'absolute',
+            left: '1.2rem',
+            top: '50%',
+            transform: 'translateY(-50%)',
+            fontSize: '1.5rem',
+            pointerEvents: 'none',
+          }}>
+            🔍
+          </div>
+        </div>
       </div>
-      
+
       {loading ? (
-        <p>Carregando personagens...</p>
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '400px', flexDirection: 'column', gap: '1rem' }}>
+          <div style={{
+            width: '60px',
+            height: '60px',
+            border: '4px solid rgba(0, 212, 255, 0.2)',
+            borderTop: '4px solid #00d4ff',
+            borderRadius: '50%',
+            animation: 'spin 1s linear infinite',
+          }}></div>
+          <p style={{ color: '#FFF', fontSize: '1.2rem', fontWeight: '600' }}>Carregando personagens...</p>
+          <style>{`
+            @keyframes spin {
+              0% { transform: rotate(0deg); }
+              100% { transform: rotate(360deg); }
+            }
+          `}</style>
+        </div>
       ) : (
         <>
           {/* Lista de Personagens */}
@@ -95,45 +184,78 @@ const CharactersPage = () => {
           </div>
 
           {/* Paginação */}
-          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1rem', marginTop: '3rem' }}>
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1.5rem', marginTop: '3rem' }}>
             <button
               onClick={() => setPage(page - 1)}
               disabled={!info?.prev}
+              className="pagination-btn"
               style={{
-                padding: '0.75rem 1.5rem',
-                borderRadius: '8px',
-                border: '2px solid #3b82f6',
-                background: info?.prev ? '#3b82f6' : '#e5e7eb',
-                color: info?.prev ? 'white' : '#9ca3af',
-                fontSize: '1rem',
-                fontWeight: '600',
+                padding: '1rem 2rem',
+                borderRadius: '12px',
+                border: '3px solid rgba(0, 212, 255, 0.4)',
+                background: info?.prev ? 'linear-gradient(135deg, #00d4ff 0%, #0096c7 100%)' : 'rgba(156, 163, 175, 0.3)',
+                color: info?.prev ? '#000' : '#6b7280',
+                fontSize: '1.1rem',
+                fontWeight: '700',
                 cursor: info?.prev ? 'pointer' : 'not-allowed',
-                transition: 'all 0.3s ease',
+                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                boxShadow: info?.prev ? '0 4px 15px rgba(0, 212, 255, 0.3)' : 'none',
+              }}
+              onMouseEnter={(e) => {
+                if (info?.prev) {
+                  e.currentTarget.style.transform = 'translateY(-3px) scale(1.05)';
+                  e.currentTarget.style.boxShadow = '0 8px 25px rgba(0, 212, 255, 0.5)';
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (info?.prev) {
+                  e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                  e.currentTarget.style.boxShadow = '0 4px 15px rgba(0, 212, 255, 0.3)';
+                }
               }}
             >
               ← Anterior
             </button>
             <span style={{
-              fontSize: '1rem',
-              fontWeight: '600',
-              color: '#1f2937',
-              padding: '0 1rem'
+              fontSize: '1.2rem',
+              fontWeight: '700',
+              color: '#FFF',
+              padding: '0.8rem 1.5rem',
+              background: 'rgba(0, 212, 255, 0.15)',
+              borderRadius: '12px',
+              border: '2px solid rgba(0, 212, 255, 0.3)',
+              backdropFilter: 'blur(10px)',
+              boxShadow: '0 4px 15px rgba(0, 212, 255, 0.2)',
             }}>
               Página {page} de {info?.pages || 1}
             </span>
             <button
               onClick={() => setPage(page + 1)}
               disabled={!info?.next}
+              className="pagination-btn"
               style={{
-                padding: '0.75rem 1.5rem',
-                borderRadius: '8px',
-                border: '2px solid #3b82f6',
-                background: info?.next ? '#3b82f6' : '#e5e7eb',
-                color: info?.next ? 'white' : '#9ca3af',
-                fontSize: '1rem',
-                fontWeight: '600',
+                padding: '1rem 2rem',
+                borderRadius: '12px',
+                border: '3px solid rgba(0, 212, 255, 0.4)',
+                background: info?.next ? 'linear-gradient(135deg, #00d4ff 0%, #0096c7 100%)' : 'rgba(156, 163, 175, 0.3)',
+                color: info?.next ? '#000' : '#6b7280',
+                fontSize: '1.1rem',
+                fontWeight: '700',
                 cursor: info?.next ? 'pointer' : 'not-allowed',
-                transition: 'all 0.3s ease',
+                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                boxShadow: info?.next ? '0 4px 15px rgba(0, 212, 255, 0.3)' : 'none',
+              }}
+              onMouseEnter={(e) => {
+                if (info?.next) {
+                  e.currentTarget.style.transform = 'translateY(-3px) scale(1.05)';
+                  e.currentTarget.style.boxShadow = '0 8px 25px rgba(0, 212, 255, 0.5)';
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (info?.next) {
+                  e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                  e.currentTarget.style.boxShadow = '0 4px 15px rgba(0, 212, 255, 0.3)';
+                }
               }}
             >
               Próxima →
@@ -146,15 +268,16 @@ const CharactersPage = () => {
 };
 
 const characterCardStyle: React.CSSProperties = {
-  border: '2px solid #e5e7eb',
-  borderRadius: '16px',
-  width: '240px',
+  border: '3px solid rgba(0, 212, 255, 0.2)',
+  borderRadius: '20px',
+  width: '260px',
   textDecoration: 'none',
   color: 'inherit',
   overflow: 'hidden',
-  boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-  transition: 'all 0.3s ease',
-  background: '#ffffff',
+  boxShadow: '0 8px 20px rgba(0, 0, 0, 0.2)',
+  transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+  background: 'rgba(255, 255, 255, 0.95)',
+  backdropFilter: 'blur(10px)',
   display: 'flex',
   flexDirection: 'column',
 };
@@ -220,8 +343,9 @@ const nameStyle: React.CSSProperties = {
   margin: '0',
   fontSize: '1.1rem',
   fontWeight: '700',
-  color: '#1f2937',
+  color: '#97F14A',
   textAlign: 'center',
+  textShadow: '0 2px 4px rgba(0, 0, 0, 0.3)',
 };
 
 export default CharactersPage;

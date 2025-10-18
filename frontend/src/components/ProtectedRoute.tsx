@@ -8,15 +8,6 @@ interface ProtectedRouteProps {
   redirectTo?: string;
 }
 
-/**
- * Middleware para proteção de rotas
- *
- * Funcionalidades:
- * - Verifica autenticação do usuário
- * - Loading state durante verificação
- * - Salva URL de destino para redirecionar após login
- * - Permite configuração de rota de redirecionamento
- */
 export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   children,
   requireAuth = true,
@@ -27,20 +18,13 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   const [isChecking, setIsChecking] = useState(true);
 
   useEffect(() => {
-    // Simula verificação assíncrona (pode ser substituída por validação de token no backend)
     const checkAuth = async () => {
-      // Aqui você pode adicionar lógica adicional como:
-      // - Validar token no backend
-      // - Verificar permissões específicas
-      // - Refresh token se necessário
-
       setIsChecking(false);
     };
 
     checkAuth();
   }, []);
 
-  // Loading state enquanto verifica autenticação
   if (isLoading || isChecking) {
     return (
       <div style={{
@@ -78,9 +62,8 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
     );
   }
 
-  // Se precisa de autenticação mas não está autenticado
   if (requireAuth && !isAuthenticated) {
-    // Salva a URL atual para redirecionar após o login
+
     return (
       <Navigate
         to={redirectTo}
@@ -90,18 +73,15 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
     );
   }
 
-  // Se não precisa de autenticação mas está autenticado (ex: página de login)
+  
   if (!requireAuth && isAuthenticated) {
     return <Navigate to="/" replace />;
   }
 
-  // Renderiza o conteúdo protegido
   return <>{children}</>;
 };
 
-/**
- * Hook personalizado para facilitar proteção de rotas com condições específicas
- */
+
 export const useProtectedRoute = (condition: boolean, redirectTo: string = '/') => {
   const location = useLocation();
 

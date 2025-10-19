@@ -84,10 +84,9 @@ const MyCharactersPage = () => {
         }
 
         .character-card:hover {
-          transform: translateY(-12px) scale(1.02) !important;
-          box-shadow: 0 20px 40px rgba(0, 212, 255, 0.3) !important;
-          border-color: #00d4ff !important;
-          background: rgba(0, 212, 255, 0.05) !important;
+          transform: translateY(-8px);
+          box-shadow: 0 12px 32px rgba(0, 212, 255, 0.4);
+          border-color: rgba(0, 212, 255, 0.6);
         }
 
         .character-card:hover img {
@@ -126,9 +125,9 @@ const MyCharactersPage = () => {
             deleteConfirm === char.id ? (
               <div key={char.id} className="character-card" style={{ ...characterCardStyle, cursor: 'default', position: 'relative' }}>
                 <div style={confirmContainerStyle}>
-                  <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🗑️</div>
+                  <div style={{ fontSize: '3rem', marginBottom: '0.5rem' }}>🗑️</div>
                   <p className="confirm-text" style={confirmTextStyle}>Remover este personagem?</p>
-                  <div style={{ display: 'flex', gap: '0.75rem', marginTop: '1.5rem', width: '100%', padding: '0 1rem' }}>
+                  <div style={{ display: 'flex', gap: '0.75rem', marginTop: '1rem', width: '100%', justifyContent: 'center', maxWidth: '180px' }}>
                     <button
                       onClick={() => handleDelete(char.id)}
                       style={{ ...confirmButtonStyle, background: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)' }}
@@ -305,25 +304,25 @@ const getStatusColor = (status: string) => {
 };
 
 const characterCardStyle: React.CSSProperties = {
-  border: '3px solid rgba(0, 212, 255, 0.2)',
-  borderRadius: '20px',
-  width: '260px',
-  textDecoration: 'none',
-  color: 'inherit',
+  background: 'rgba(31, 41, 55, 0.8)',
+  borderRadius: '16px',
   overflow: 'hidden',
-  boxShadow: '0 8px 20px rgba(0, 0, 0, 0.2)',
+  textDecoration: 'none',
+  boxShadow: '0 8px 24px rgba(0, 0, 0, 0.4)',
   transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-  background: 'rgba(255, 255, 255, 0.95)',
+  border: '2px solid rgba(0, 212, 255, 0.3)',
   backdropFilter: 'blur(10px)',
   display: 'flex',
   flexDirection: 'column',
+  width: '220px',
+  height: '280px',
   cursor: 'pointer',
 };
 
 const imageContainerStyle: React.CSSProperties = {
   position: 'relative',
   width: '100%',
-  height: '240px',
+  height: '220px',
   overflow: 'hidden',
 };
 
@@ -372,18 +371,24 @@ const statusDotStyle = (status: string): React.CSSProperties => ({
 const cardContentStyle: React.CSSProperties = {
   padding: '1rem',
   display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'center',
   alignItems: 'center',
+  justifyContent: 'center',
+  height: '60px',
+  flex: '0 0 60px',
 };
 
 const nameStyle: React.CSSProperties = {
   margin: '0',
   fontSize: '1.1rem',
   fontWeight: '700',
-  color: '#97F14A',
+  color: '#00d4ff',
   textAlign: 'center',
-  textShadow: '0 2px 4px rgba(0, 0, 0, 0.3)',
+  lineHeight: '1.4',
+  width: '100%',
+  height: '100%',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
 };
 
 const deleteIconStyle: React.CSSProperties = {
@@ -407,26 +412,29 @@ const deleteIconStyle: React.CSSProperties = {
 };
 
 const confirmContainerStyle: React.CSSProperties = {
-  padding: '2rem',
+  padding: '1.5rem 1rem',
   display: 'flex',
   flexDirection: 'column',
-  gap: '0.75rem',
+  gap: '0.5rem',
   alignItems: 'center',
   justifyContent: 'center',
-  minHeight: '240px',
+  height: '100%',
+  width: '100%',
 };
 
 const confirmTextStyle: React.CSSProperties = {
   margin: 0,
-  fontSize: '1.1rem',
+  fontSize: '0.95rem',
   fontWeight: '700',
-  color: '#1f2937',
+  color: '#ffffff',
   textAlign: 'center',
+  padding: '0 1rem',
+  lineHeight: '1.4',
 };
 
 const confirmButtonStyle: React.CSSProperties = {
   flex: 1,
-  padding: '0.75rem 1.5rem',
+  padding: '0.75rem 1.25rem',
   fontSize: '1rem',
   fontWeight: '700',
   borderRadius: '10px',
@@ -435,7 +443,7 @@ const confirmButtonStyle: React.CSSProperties = {
   cursor: 'pointer',
   transition: 'all 0.3s ease',
   boxShadow: '0 4px 12px rgba(0, 0, 0, 0.2)',
-  minWidth: '80px',
+  minWidth: '70px',
 };
 
 const emptyStateStyle: React.CSSProperties = {

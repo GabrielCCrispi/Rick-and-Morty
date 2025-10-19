@@ -79,10 +79,9 @@ const CharactersPage = () => {
         }
 
         .character-card:hover {
-          transform: translateY(-12px) scale(1.02);
-          box-shadow: 0 20px 40px rgba(0, 212, 255, 0.3);
-          border-color: #00d4ff;
-          background: rgba(0, 212, 255, 0.05) !important;
+          transform: translateY(-8px);
+          box-shadow: 0 12px 32px rgba(0, 212, 255, 0.4);
+          border-color: rgba(0, 212, 255, 0.6);
         }
 
         .character-card:hover img {
@@ -270,24 +269,24 @@ const CharactersPage = () => {
 };
 
 const characterCardStyle: React.CSSProperties = {
-  border: '3px solid rgba(0, 212, 255, 0.2)',
-  borderRadius: '20px',
-  width: '260px',
-  textDecoration: 'none',
-  color: 'inherit',
+  background: 'rgba(31, 41, 55, 0.8)',
+  borderRadius: '16px',
   overflow: 'hidden',
-  boxShadow: '0 8px 20px rgba(0, 0, 0, 0.2)',
+  textDecoration: 'none',
+  boxShadow: '0 8px 24px rgba(0, 0, 0, 0.4)',
   transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-  background: 'rgba(255, 255, 255, 0.95)',
+  border: '2px solid rgba(0, 212, 255, 0.3)',
   backdropFilter: 'blur(10px)',
   display: 'flex',
   flexDirection: 'column',
+  width: '220px',
+  height: '280px',
 };
 
 const imageContainerStyle: React.CSSProperties = {
   position: 'relative',
   width: '100%',
-  height: '240px',
+  height: '220px',
   overflow: 'hidden',
 };
 
@@ -336,18 +335,24 @@ const statusDotStyle = (status: string): React.CSSProperties => ({
 const cardContentStyle: React.CSSProperties = {
   padding: '1rem',
   display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'center',
   alignItems: 'center',
+  justifyContent: 'center',
+  height: '60px',
+  flex: '0 0 60px',
 };
 
 const nameStyle: React.CSSProperties = {
   margin: '0',
   fontSize: '1.1rem',
   fontWeight: '700',
-  color: '#97F14A',
+  color: '#00d4ff',
   textAlign: 'center',
-  textShadow: '0 2px 4px rgba(0, 0, 0, 0.3)',
+  lineHeight: '1.4',
+  width: '100%',
+  height: '100%',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
 };
 
 export default CharactersPage;

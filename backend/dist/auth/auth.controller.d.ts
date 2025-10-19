@@ -6,26 +6,11 @@ export declare class AuthController {
         name: string;
         email: string;
         password: string;
-    }): Promise<{
-        id: number;
-        name: string;
-        email: string;
-    }>;
+    }): unknown;
     login(body: {
         email: string;
         password: string;
-    }): Promise<{
-        id: number;
-        name: string;
-        email: string;
-        access_token: string;
-    }>;
-    logout(): Promise<{
-        message: string;
-    }>;
-    verify(req: any): Promise<{
-        id: any;
-        name: any;
-        email: any;
-    }>;
+    }): unknown;
+    logout(): unknown;
+    verify(req: any): unknown;
 }

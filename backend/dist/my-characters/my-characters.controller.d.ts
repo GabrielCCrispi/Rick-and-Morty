@@ -11,27 +11,7 @@ export declare class MyCharactersController {
         location: string;
         image: string;
         status: string;
-    }): Promise<{
-        id: number;
-        originalCharacterId: number;
-        name: string;
-        species: string;
-        gender: string;
-        origin: string;
-        location: string;
-        image: string;
-        status: string;
-    }>;
-    getMyCharacters(req: any): Promise<{
-        id: number;
-        originalCharacterId: number;
-        name: string;
-        species: string;
-        gender: string;
-        origin: string;
-        location: string;
-        image: string;
-        status: string;
-    }[]>;
-    deleteCharacter(req: any, characterId: string): Promise<void>;
+    }): unknown;
+    getMyCharacters(req: any): unknown;
+    deleteCharacter(req: any, characterId: string): any;
 }

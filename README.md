@@ -80,7 +80,8 @@ cd rick_and_morty
 
 # 2. Configure o backend
 cd backend
-cp .env.example .env
+cp .env.example .env #MAC/LINUX
+copy .env.example .env #Windows
 # IMPORTANTE: Edite o .env e troque a JWT_SECRET!
 npm install
 cd ..

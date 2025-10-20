@@ -209,6 +209,7 @@ Componentes organizados da página inicial:
 - [ ] PWA (Progressive Web App)
 - [ ] Docker e Docker Compose
 - [ ] CI/CD pipeline
+- [ ] Cache com TTL
 
 ## Desenvolvedor :octocat:
 | [<img src="https://avatars.githubusercontent.com/u/122823447?v=4" width="115"><br><sub>Gabriel Crispi</sub>](https://github.com/GabrielCCrispi) 

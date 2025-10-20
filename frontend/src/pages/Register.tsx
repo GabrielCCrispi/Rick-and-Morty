@@ -22,20 +22,14 @@ const RegisterPage = () => {
     }
 
     try {
-      const response = await localApi.post('/auth/register', {
+      await localApi.post('/auth/register', {
         name,
         email,
         password,
       });
 
-      // Fazer login automático após o cadastro
-      const { id, name: userName, email: userEmail } = response.data;
-      localStorage.setItem('userId', id.toString());
-      localStorage.setItem('userName', userName);
-      localStorage.setItem('userEmail', userEmail);
-
-      toast.success('Cadastro realizado com sucesso! Bem-vindo(a)!');
-      setTimeout(() => navigate('/'), 1500);
+      toast.success('Cadastro realizado com sucesso! Faça login para continuar.');
+      setTimeout(() => navigate('/login'), 1500);
     } catch (err: any) {
       if (err.response && err.response.data.message) {
         setError(err.response.data.message);

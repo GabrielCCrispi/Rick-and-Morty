@@ -45,7 +45,7 @@ const RegisterPage = () => {
       <ToastContainer toasts={toast.toasts} removeToast={toast.removeToast} />
       <div style={formContainerStyle}>
         <div style={headerStyle}>
-          <h1 style={titleStyle}>✨ Cadastro</h1>
+          <h1 style={titleStyle}>📝 Cadastro</h1>
           <p style={subtitleStyle}>Crie sua conta e comece a explorar</p>
         </div>
 

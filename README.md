@@ -101,24 +101,6 @@ cd frontend && npm run dev
 
 Acesse: http://localhost:5173
 
-### ✅ O que funciona automaticamente (sem configuração extra):
-
-Após seguir os passos acima, tudo funcionará out-of-the-box:
-
-- ✅ **Banco de dados SQLite** - Criado automaticamente na primeira execução
-- ✅ **Tabelas do banco** - TypeORM cria/sincroniza automaticamente
-- ✅ **Sistema de Login/Registro** - Pronto para uso
-- ✅ **Sistema de Favoritos** - Funcionando completamente
-- ✅ **Integração com API do Rick and Morty** - Sem necessidade de API key
-
-**Não é necessário:**
-- ❌ Instalar/configurar PostgreSQL, MySQL ou qualquer outro banco
-- ❌ Criar tabelas manualmente
-- ❌ Configurar variáveis de ambiente complexas (apenas o `.env`)
-- ❌ API keys externas
-
----
-
 ### ⚙️ Backend - Configuração Obrigatória
 
 **⚠️ IMPORTANTE:** O backend precisa de um arquivo `.env` para funcionar!
@@ -198,32 +180,6 @@ O banco de dados SQLite é **criado automaticamente** na primeira execução do 
 - **ORM**: TypeORM gerencia tudo automaticamente
 - **Tabelas**: `users` e `characters` são criadas na primeira execução
 - **Sincronização**: Com `synchronize: true`, o TypeORM cria/atualiza as tabelas automaticamente
-
-**⚠️ IMPORTANTE**:
-- O arquivo `db.sqlite` **NÃO** está no repositório Git (`.gitignore`)
-- Cada desenvolvedor terá seu próprio banco local
-- Ao clonar o projeto, o banco será criado vazio na primeira execução
-- Seus dados ficam apenas na sua máquina
-
-#### 🔄 Como funciona:
-
-1. **Primeira execução**: `npm run start:dev`
-   - TypeORM detecta que não existe `db.sqlite`
-   - Cria o arquivo automaticamente
-   - Cria todas as tabelas definidas nas entities
-
-2. **Execuções seguintes**:
-   - Usa o banco existente
-   - Sincroniza alterações nas entities (se houver)
-
-#### 💾 Resetar o banco:
-
-Se quiser começar do zero:
-```bash
-cd backend
-rm db.sqlite
-npm run start:dev  # Cria um novo banco vazio
-```
 
 ## 🎨 Detalhamento do Frontend
 

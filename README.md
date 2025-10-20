@@ -224,9 +224,41 @@ curl -X POST http://localhost:3000/my-characters \
   - `favorite-character.entity.ts` - Entidade de personagem
 
 ### Banco de Dados
-- SQLite armazenado em `backend/db.sqlite`
-- Gerenciado pelo TypeORM
-- Tabelas: `user` e `favorite_character`
+
+#### 📦 SQLite - Criação Automática
+
+O banco de dados SQLite é **criado automaticamente** na primeira execução do backend:
+
+- **Localização**: `backend/db.sqlite` (arquivo local, não vai para o GitHub)
+- **ORM**: TypeORM gerencia tudo automaticamente
+- **Tabelas**: `users` e `characters` são criadas na primeira execução
+- **Sincronização**: Com `synchronize: true`, o TypeORM cria/atualiza as tabelas automaticamente
+
+**⚠️ IMPORTANTE**:
+- O arquivo `db.sqlite` **NÃO** está no repositório Git (`.gitignore`)
+- Cada desenvolvedor terá seu próprio banco local
+- Ao clonar o projeto, o banco será criado vazio na primeira execução
+- Seus dados ficam apenas na sua máquina
+
+#### 🔄 Como funciona:
+
+1. **Primeira execução**: `npm run start:dev`
+   - TypeORM detecta que não existe `db.sqlite`
+   - Cria o arquivo automaticamente
+   - Cria todas as tabelas definidas nas entities
+
+2. **Execuções seguintes**:
+   - Usa o banco existente
+   - Sincroniza alterações nas entities (se houver)
+
+#### 💾 Resetar o banco:
+
+Se quiser começar do zero:
+```bash
+cd backend
+rm db.sqlite
+npm run start:dev  # Cria um novo banco vazio
+```
 
 ## 🎨 Detalhamento do Frontend
 

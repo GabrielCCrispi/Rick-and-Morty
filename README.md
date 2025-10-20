@@ -119,8 +119,6 @@ Após seguir os passos acima, tudo funcionará out-of-the-box:
 
 ---
 
-## 🔧 Configuração
-
 ### ⚙️ Backend - Configuração Obrigatória
 
 **⚠️ IMPORTANTE:** O backend precisa de um arquivo `.env` para funcionar!
@@ -158,39 +156,6 @@ Copie a string gerada e cole no lugar de `sua-chave-jwt-super-segura-aqui`.
 > - Cada desenvolvedor deve criar seu próprio `.env`
 > - Nunca compartilhe sua `JWT_SECRET` em produção!
 
-## 🔐 Autenticação
-
-A aplicação utiliza JWT (JSON Web Tokens) para autenticação segura:
-
-1. **Registro**: Usuário cria uma conta com username e senha
-2. **Login**: Credenciais são validadas e um token JWT é gerado
-3. **Armazenamento**: Token é armazenado no `localStorage` do navegador
-4. **Autorização**: Token é enviado no header `Authorization: Bearer <token>` em cada requisição
-5. **Validação**: Backend valida o token em rotas protegidas usando Guards
-
-#### Login
-```bash
-curl -X POST http://localhost:3000/auth/login \
-  -H "Content-Type: application/json" \
-  -d '{"username": "rick", "password": "morty123"}'
-```
-
-#### Adicionar personagem favorito
-```bash
-curl -X POST http://localhost:3000/my-characters \
-  -H "Content-Type: application/json" \
-  -H "Authorization: Bearer SEU_TOKEN_AQUI" \
-  -d '{
-    "name": "Rick Sanchez",
-    "status": "Alive",
-    "species": "Human",
-    "gender": "Male",
-    "origin": "Earth (C-137)",
-    "image": "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
-    "originalCharacterId": 1
-  }'
-```
-
 ## 🎨 Páginas e Rotas
 
 ### Públicas
@@ -210,8 +175,8 @@ curl -X POST http://localhost:3000/my-characters \
 #### Auth Module
 - **Responsabilidades**: Registro, login, validação JWT
 - **Arquivos principais**:
-  - `auth.service.ts` - Lógica de negócio
-  - `auth.controller.ts` - Endpoints REST
+- `auth.service.ts` - Lógica de negócio
+- `auth.controller.ts` - Endpoints REST
   - `jwt.strategy.ts` - Estratégia de validação JWT
   - `jwt-auth.guard.ts` - Guard para rotas protegidas
   - `user.entity.ts` - Entidade de usuário
@@ -276,136 +241,8 @@ Componentes organizados da página inicial:
 - `home.styles.ts` - Estilos tipados para componentes Home
 - `animations.css` - Animações CSS (fadeIn, float, etc.)
 
-### Contextos
-- **AuthContext**: Gerencia estado de autenticação global
-
 ### Hooks Customizados
 - **useToast**: Sistema de notificações toast
-
-## 🐛 Troubleshooting
-
-### ❌ Erro: "Cannot find module 'sqlite3'"
-**Solução:**
-```bash
-cd backend
-rm -rf node_modules package-lock.json
-npm install
-```
-
-### ❌ Backend não inicia / Erro na porta 3000
-**Causa**: Porta 3000 já está em uso por outro processo
-
-**Solução 1** - Liberar a porta:
-```bash
-# Linux/Mac
-lsof -ti:3000 | xargs kill -9
-
-# Windows
-netstat -ano | findstr :3000
-taskkill /PID <PID_NUMBER> /F
-```
-
-**Solução 2** - Mudar a porta no `.env`:
-```env
-PORT=3001  # Use outra porta
-```
-
-### ❌ Frontend não conecta ao backend
-**Verificações:**
-1. Backend está rodando? Acesse http://localhost:3000 - deve retornar algo
-2. Verifique a URL da API em `frontend/src/services/api.ts`
-3. Confirme que não há erro de CORS no console do navegador
-4. Limpe o cache do navegador (Ctrl+Shift+Delete)
-
-### ❌ Erro: "ENOENT: no such file or directory, open '.env'"
-**Solução:**
-```bash
-cd backend
-cp .env.example .env
-# Edite o .env e configure a JWT_SECRET
-```
-
-### ❌ Erro de autenticação / Token inválido
-**Solução:**
-1. Limpe o localStorage do navegador:
-   - Abra o DevTools (F12)
-   - Vá em Application > Local Storage
-   - Delete todos os itens
-2. Verifique se o `JWT_SECRET` está configurado no `backend/.env`
-3. Reinicie o backend
-4. Faça login novamente
-
-### ❌ Banco de dados não é criado
-**Solução:**
-```bash
-cd backend
-# Remove o banco antigo se existir
-rm -f db.sqlite
-# Reinicia o backend - ele criará automaticamente
-npm run start:dev
-```
-
-### ❌ Erro: "npm: command not found"
-**Causa**: Node.js/npm não está instalado
-
-**Solução:**
-1. Instale o Node.js em https://nodejs.org/
-2. Reinicie o terminal
-3. Verifique: `node --version && npm --version`
-
-### ❌ Dependências não instalam (npm install falha)
-**Solução:**
-```bash
-# Limpa cache do npm
-npm cache clean --force
-
-# Remove node_modules e package-lock.json
-rm -rf node_modules package-lock.json
-
-# Reinstala
-npm install
-```
-
-### ❌ Erro de permissão no Linux/Mac
-**Solução:**
-```bash
-# NÃO use sudo npm install!
-# Corrija as permissões do npm:
-sudo chown -R $USER:$USER ~/.npm
-sudo chown -R $USER:$USER ~/rick_and_morty
-```
-
-### ✅ Tudo ainda não funciona?
-1. **Certifique-se** que Node.js v16+ está instalado
-2. **Delete** todas as pastas `node_modules` (backend e frontend)
-3. **Delete** todos os `package-lock.json`
-4. **Execute** novamente o início rápido do README
-5. **Verifique** os logs do terminal para erros específicos
-
----
-
-## ✅ Checklist de Instalação
-
-Use este checklist para garantir que tudo está configurado corretamente:
-
-- [ ] Node.js v16+ instalado (`node --version`)
-- [ ] npm v7+ instalado (`npm --version`)
-- [ ] Repositório clonado
-- [ ] Backend: `npm install` executado
-- [ ] Frontend: `npm install` executado
-- [ ] Arquivo `backend/.env` criado (copiado de `.env.example`)
-- [ ] `JWT_SECRET` configurado no `backend/.env`
-- [ ] Backend rodando em http://localhost:3000 (Terminal 1)
-- [ ] Frontend rodando em http://localhost:5173 (Terminal 2)
-- [ ] Página inicial abre sem erros
-- [ ] Consegue registrar um novo usuário
-- [ ] Consegue fazer login
-- [ ] Consegue ver personagens
-- [ ] Consegue adicionar favoritos
-
-**Se todos os itens estão marcados, parabéns! 🎉 Seu projeto está funcionando perfeitamente!**
-
----
 
 ## 📈 Melhorias Futuras
 
